@@ -1,9 +1,14 @@
 package entity
 
-import "github.com/fighterlyt/workflow"
-
-type Entity interface{
-	GetType() workflow.EntityType
+type Entity interface {
+	GetType() EntityType
+	GetContent() map[EntityType][]string
 }
 
+type EntityType int
 
+const (
+	Eflow EntityType = iota
+	Enode
+	Eedge
+)

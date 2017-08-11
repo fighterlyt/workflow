@@ -1,22 +1,20 @@
 package entity
 
-import "github.com/fighterlyt/workflow"
+import "time"
 
-type FlowInstance struct {
-	nodeIds []string
-	edgeIds []string
+type Flow struct {
+	nodeIds    []string
+	edgeIds    []string
+	createTime time.Time
 }
 
-func (f FlowInstance) GetType() workflow.EntityType {
-	return workflow.Eflow
+func (f Flow) GetType() EntityType {
+	return Eflow
 }
 
-func (f FlowInstance) GetContent() []Entity {
-	result:=make([]Entity,0,len(f.nodeIds)+len(f.edgeIds))
-
-	result=append(result,f.nodeIds...)
-	result
-	for _,nodeId:=range f.nodeIds{
-
+func (f Flow) GetContent() map[EntityType][]string {
+	return map[EntityType][]string{
+		Enode: f.nodeIds,
+		Eedge: f.edgeIds,
 	}
 }

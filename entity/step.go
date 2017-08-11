@@ -1,4 +1,4 @@
-package workflow
+package entity
 
 import "fmt"
 
