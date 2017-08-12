@@ -29,12 +29,13 @@ var (
 
 //FlowDefinition 流程定义
 type FlowDefinition struct {
-	name          string
-	version       int
-	createTime    time.Time
+	name          string    //流程名称
+	version       int       //版本
+	createTime    time.Time //创建时间
 	canWithDraw   bool
 	canMultiSend  bool
 	singleForward bool
+	start         *gographviz.Node
 	edges         *gographviz.Edges
 	nodes         *gographviz.Nodes
 }
@@ -68,6 +69,8 @@ func (f *FlowDefinition) GetVersion(graph *gographviz.Graph) error {
 	}
 	return nil
 }
+
+/* 根据节点信息，从流程定义中到边*/
 func (f *FlowDefinition) NewEdge(from, to *Node, dir Dir) (*Edge, error) {
 	if from == nil || to == nil {
 		return nil, errors.New("边对应的两个节点不能为空")
@@ -76,10 +79,21 @@ func (f *FlowDefinition) NewEdge(from, to *Node, dir Dir) (*Edge, error) {
 	if edge := f.GetEdge(from.GetName(), to.GetName(), dir); edge == nil {
 		return nil, errors.New("边未定义")
 	} else {
-		return NewEdge(from.GetId(),to.GetId(),getEdgeLabel(f,),dir)
+		return NewEdge(from.GetId(), to.GetId(), getEdgeLabel(edge), dir, time.Now()), nil
 	}
 
 }
+func getEdgeLabel(edge *gographviz.Edge) string {
+	if edge.Attrs != nil {
+		if label, ok := edge.Attrs[gographviz.Label]; ok {
+			return label
+		}
+	}
+
+	return InvalideNodeName
+
+}
+
 func (f *FlowDefinition) GetNodeByName(name string) *gographviz.Node {
 	return f.nodes.Lookup[name]
 }

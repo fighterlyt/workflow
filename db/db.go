@@ -1,6 +1,6 @@
 package db
 
-import "github.com/fighterlyt/workflow/entity"
+import "github.com/fighterlyt/workflow/def"
 
 /*
 	DBPlugin 定义了整个流程的持久化插件
@@ -14,8 +14,8 @@ import "github.com/fighterlyt/workflow/entity"
 	Delete  删除
 */
 type DBPlugin interface {
-	Load(id string, data entity.Entity) error
-	Save(data entity.Entity) error
-	Update(id string, data entity.Entity) error
-	Delete(data entity.Entity) error
+	Load(id string, data def.Entity) error
+	Save(data def.Entity) error
+	Update(id string, data def.Entity) error
+	Delete(data def.Entity) error
 }

@@ -1,4 +1,4 @@
-package entity
+package def
 
 type Entity interface {
 	GetType() EntityType

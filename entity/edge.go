@@ -1,10 +1,6 @@
 package entity
 
-import (
-	"time"
-
-	"github.com/fighterlyt/gographviz"
-)
+import "time"
 
 type Dir int
 
@@ -39,19 +35,4 @@ func NewEdge(srcId, targetId, name string, dir Dir, createTime time.Time) *Edge 
 		name:       name,
 		createTime: createTime,
 	}
-}
-
-func (e Edge) GetLabel() string {
-	return getEdgeLabel(e.definition, e.definition.GetEdge())
-}
-
-func getEdgeLabel(edge *gographviz.Edge) string {
-	if edge.Attrs != nil {
-		if label, ok := edge.Attrs[gographviz.Label]; ok {
-			return label
-		}
-	}
-
-	return InvalideNodeName
-
 }
